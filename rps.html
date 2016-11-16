@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock, Paper, Scissors!</title>
+    </head>
+<body style="font-family:consolas">
+    <h1>Rock, Paper, Scissors!</h1>
+    <p id="pScore"></p>
+    <p id="cpuScore"></p>
+    <br>
+    <button type="button" onclick="check(0)" style="font-family:consolas">Rock!</button>
+    <button type="button" onclick="check(1)" style="font-family:consolas">Paper!</button>
+    <button type="button" onclick="check(2)" style="font-family:consolas">Scissors!</button>
+    <br><br>
+    <p id="pChoice"></p>
+    <p id="cpuChoice"></p>
+    <p id="win"></p>
+    
+    <script>
+        var pScore = 0;
+        var pScoreStr = "Player Score: ";
+        var cpuScore = 0;
+        var cpuScoreStr = "CPU Score: ";
+        var cpuChoice;
+        var cpuChoiceStr = "CPU chooses "
+        var pChoiceStr = "Player chooses "
+        var time = 500;
+        var rock = "rock!";
+        var paper = "paper!";
+        var scissors = "scissors!";
+        
+        document.getElementById("pScore").innerHTML = pScoreStr + pScore;
+        document.getElementById("cpuScore").innerHTML = cpuScoreStr + cpuScore;
+        
+        function check(num){
+            if(num == 0)
+                document.getElementById("pChoice").innerHTML = pChoiceStr + rock;
+            else if(num == 1)
+                document.getElementById("pChoice").innerHTML = pChoiceStr + paper;
+            else
+                document.getElementById("pChoice").innerHTML = pChoiceStr + scissors;
+            
+            document.getElementById("cpuChoice").innerHTML = "";
+            document.getElementById("win").innerHTML = "";
+            
+            cpuChoice = parseInt(Math.floor(Math.random() * 3));
+            document.getElementById("cpuChoice").innerHTML += cpuChoiceStr;
+            
+            var v = setInterval(function(){
+                document.getElementById("cpuChoice").innerHTML += ".";
+                i++;
+            },time);
+            setTimeout(
+                function(){
+                    clearInterval(v);
+                    document.getElementById("cpuChoice").innerHTML += " ";
+                    if(cpuChoice == 0){//ROCK
+                        document.getElementById("cpuChoice").innerHTML += rock;
+                        if(num == 0){
+                            tie();
+                        }
+                        else if(num == 1){
+                            pWin();
+                        }
+                        else{
+                            cpuWin();
+                        }
+                    }
+                    else if(cpuChoice == 1){//PAPER
+                        document.getElementById("cpuChoice").innerHTML += paper;
+                        if(num == 0){
+                            cpuWin();
+                        }
+                        else if(num == 1){
+                            tie();
+                        }
+                        else{
+                            pWin();
+                        }
+                    }
+                    else{//SCISSORS
+                        document.getElementById("cpuChoice").innerHTML += scissors;
+                        if(num == 0){
+                            pWin();
+                        }
+                        else if(num == 1){
+                            cpuWin();
+                        }
+                        else{
+                            tie();
+                        }
+                    }
+                 },time*4);
+        }
+        
+        function pWin(){
+            pScore++;
+            document.getElementById("win").innerHTML = "Player wins!";
+            document.getElementById("pScore").innerHTML = pScoreStr + pScore;
+        }
+        
+        function cpuWin(){
+            cpuScore++;
+            document.getElementById("win").innerHTML = "CPU wins!";
+            document.getElementById("cpuScore").innerHTML = cpuScoreStr + cpuScore;
+        }
+        
+        function tie(){
+            document.getElementById("win").innerHTML = "Tie!";
+        }
+        
+    </script>
+    
+    </body>
+</html>
